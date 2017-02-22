@@ -61,10 +61,6 @@ h1, h2, h3, h4, h5, h6, label {
   color: #6FBEF3;
 }
 
-.home-menu ul {
-  float: right;
-}
-
 .home-menu li a:hover, .home-menu li a:focus {
   background: none;
   border: none;
@@ -142,4 +138,20 @@ h1, h2, h3, h4, h5, h6, label {
 .footer {
   background: #111111;
   width: 100%;
+}
+
+@media (min-width: 48em) {
+  /* We increase the body font size */
+  body {
+    font-size: 16px;
+  }
+
+  /* We can align the menu header to the left, but float the menu items to the right. */
+  .home-menu {
+    text-align: left;
+  }
+
+  .home-menu ul {
+    float: right;
+  }
 }
