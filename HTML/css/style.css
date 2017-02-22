@@ -6,6 +6,7 @@ html {
 body {
   width: 100%;
   height: 100%;
+  background: #FFFFFF url(/images/background.jpg);
 }
 
 /* MENU */
@@ -27,27 +28,23 @@ body {
 }
 
 .pure-menu .pure-menu-fixed {
-  border-bottom: none; 
+  border-bottom: none;
 }
 
 /* CONTENT */
 .wrapper {
   margin-top: 34px;
   height: 100%;
-  background: blue;
 }
 
 /* CONTENT */
 .content {
-  margin-top: 34px;
 }
 
 .intro {
-  background: yellow;
 }
 
 .chatbox {
-  background: green;
   height: 500px;
 }
 
@@ -73,13 +70,13 @@ body {
     float: right;
   }
 
-  .splash {
+  .content {
   }
 
-  .splash-intro {
+  .intro {
   }
 
-  .splash-content {
+  .chatbox {
   }
 
 }
