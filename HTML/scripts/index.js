@@ -42,3 +42,14 @@ var chat= function() {
   cloudilly.connect("cloudilly", "b24c16b0-a13e-4685-8ceb-daa4b42d036e");
   document.getElementById("chatbox").innerHTML = document.getElementById("chatbox").innerHTML + "<p>Connecting ...</p>";
 }
+
+var post= function() {
+  var message= document.getElementById("something").value;
+  document.getElementById("something").value= "";
+  var payload= {}; payload.msg= message;
+  cloudilly.post("room", payload, function(err, res) {
+    err ? console.log("Error: Oops. Something wrong") : console.log("@@@@@@ POST");
+    console.log(res);
+    return false;
+  });
+}
