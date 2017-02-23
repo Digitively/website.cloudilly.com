@@ -44,30 +44,38 @@
         </div>
       </form>
 
-      <br/>
-      <div class="pure-u-1">
-        <pre class="code" data-language="html"><code>&lt;style&gt;
-.custom-restricted-width {
-    /* To limit the menu width to the content of the menu: */
-    display: inline-block;
-    /* Or set the width explicitly: */
-    /* width: 10em; */
-}
-&lt;/style&gt;
-&lt;div class&#x3D;&quot;pure-menu custom-restricted-width&quot;&gt;
-    &lt;span class&#x3D;&quot;pure-menu-heading&quot;&gt;Yahoo Sites&lt;/span&gt;
+      <br/><br/>
 
-    &lt;ul class&#x3D;&quot;pure-menu-list&quot;&gt;
-        &lt;li class&#x3D;&quot;pure-menu-item&quot;&gt;&lt;a href&#x3D;&quot;#&quot; class&#x3D;&quot;pure-menu-link&quot;&gt;Flickr&lt;/a&gt;&lt;/li&gt;
-        &lt;li class&#x3D;&quot;pure-menu-item&quot;&gt;&lt;a href&#x3D;&quot;#&quot; class&#x3D;&quot;pure-menu-link&quot;&gt;Messenger&lt;/a&gt;&lt;/li&gt;
-        &lt;li class&#x3D;&quot;pure-menu-item&quot;&gt;&lt;a href&#x3D;&quot;#&quot; class&#x3D;&quot;pure-menu-link&quot;&gt;Sports&lt;/a&gt;&lt;/li&gt;
-        &lt;li class&#x3D;&quot;pure-menu-item&quot;&gt;&lt;a href&#x3D;&quot;#&quot; class&#x3D;&quot;pure-menu-link&quot;&gt;Finance&lt;/a&gt;&lt;/li&gt;
-        &lt;li class&#x3D;&quot;pure-menu-heading&quot;&gt;More Sites&lt;/li&gt;
-        &lt;li class&#x3D;&quot;pure-menu-item&quot;&gt;&lt;a href&#x3D;&quot;#&quot; class&#x3D;&quot;pure-menu-link&quot;&gt;Games&lt;/a&gt;&lt;/li&gt;
-        &lt;li class&#x3D;&quot;pure-menu-item&quot;&gt;&lt;a href&#x3D;&quot;#&quot; class&#x3D;&quot;pure-menu-link&quot;&gt;News&lt;/a&gt;&lt;/li&gt;
-        &lt;li class&#x3D;&quot;pure-menu-item&quot;&gt;&lt;a href&#x3D;&quot;#&quot; class&#x3D;&quot;pure-menu-link&quot;&gt;OMG!&lt;/a&gt;&lt;/li&gt;
-    &lt;/ul&gt;
-&lt;/div&gt;</code></pre>
+      <div id="tabnav" class="pure-u-1">
+        <div class="pure-menu pure-menu-horizontal">
+          <ul class="pure-menu-list">
+            <li class="pure-menu-item"><a href="javascript:void(0)" onclick="openTab(event, 'web');" class="pure-menu-link tablinks active">Web</a></li>
+            <li class="pure-menu-item"><a href="javascript:void(0)" onclick="openTab(event, 'objc');" class="pure-menu-link tablinks">ObjC</a></li>
+            <li class="pure-menu-item"><a href="javascript:void(0)" onclick="openTab(event, 'android');" class="pure-menu-link tablinks">Android</a></li>
+          </ul>
+        </div>
+      </div>
+      <script type="text/javascript">
+        function openTab(event, tab) {
+          var tabcontent= document.getElementsByClassName("tabcontent");
+          for(var i= 0; i< tabcontent.length; i++) { tabcontent[i].style.display= "none"; }
+          var tablinks= document.getElementsByClassName("tablinks");
+          for(i= 0; i< tablinks.length; i++) { tablinks[i].className= tablinks[i].className.replace(" active", ""); }
+          document.getElementById(tab).style.display= "block";
+          event.currentTarget.className += " active";
+        }
+      </script>
+
+      <div class="pure-u-1">
+        <pre id="web" class="code tabcontent" style="display:inherit;"><code>WEB</code></pre>
+      </div>
+
+      <div class="pure-u-1">
+        <pre id="objc" class="code tabcontent" style="display:none;"><code>OBJC</code></pre>
+      </div>
+
+      <div class="pure-u-1">
+        <pre id="android" class="code tabcontent" style="display:none;"><code>ANDROID</code></pre>
       </div>
 
     </div>

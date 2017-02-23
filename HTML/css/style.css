@@ -2,8 +2,7 @@ html { width: 100%; height: 100%; }
 body {
   width: 100%;
   height: 100%;
-  background: #FFFFFF url(/images/background.jpg);
-  /* background: yellow; */
+  background: #F5F3F5;
 }
 h1, p {
   margin: 0px;
@@ -66,19 +65,56 @@ h1, p {
   border-radius: 0px;
 }
 
-/* FOOTER */
-.footer {
-  background: #000000;
-  height: 34px;
-}
-
 /* CODE */
 .code {
   font-family: Consolas, Courier, monospace;
   padding: 10px;
   border: 1px solid #CCCCCC;
   overflow-x: auto;
-  -webkit-overflow-scrolling: touch;
+}
+
+pre {
+  margin-top: 5px;
+}
+
+#tabnav {
+  margin-top: 50px;
+  border-top: none;
+  border-bottom: 1px solid #CCCCCC;
+}
+
+#tabnav li a:hover, #tabnav li a:focus {
+  cursor: pointer;
+  border-bottom: none;
+}
+
+#tabnav li a.active {
+  background: #F5F3F5;
+  margin-bottom: -1px;
+  border-top: 1px solid #CCCCCC;
+  border-right: 1px solid #CCCCCC;
+  border-left: 1px solid #CCCCCC;
+}
+
+.tabcontent {
+  -webkit-animation: fadeEffect 1s;
+  animation: fadeEffect 1s;
+}
+
+@-webkit-keyframes fadeEffect {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes fadeEffect {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+/* FOOTER */
+.footer {
+  background: #000000;
+  height: 34px;
 }
 
 /* RESPONSIVE */
