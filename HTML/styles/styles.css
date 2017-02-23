@@ -4,7 +4,7 @@ body {
   height: 100%;
   background: #F5F3F5;
 }
-h1, p {
+h1, h2, p {
   margin: 0px;
   padding: 0px;
 }
@@ -58,7 +58,7 @@ h1, p {
 .pure-input {
   border-radius: 0px !important;
   box-shadow: none !important;
-  margin: 0px !important;
+  margin: 0px 0px 5px 0px !important;
 }
 
 .pure-button {
@@ -112,6 +112,52 @@ pre {
   to { opacity: 1; }
 }
 
+/* PRICING */
+.pricing-table {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.pricing-header {
+  margin: 50px 0px 50px 0px;
+  text-align: center;
+}
+
+.pricing-tier {
+  border: 1px solid #CCCCCC;
+  margin: 0px 0px 10px 0px;
+}
+
+.pricing-tier-header {
+  border-bottom: 1px solid #CCCCCC;
+  padding: 10px 0px 10px 0px;
+  text-align: center;
+}
+
+.pricing-tier-header h1 {
+  font-weight: 100;
+}
+
+.pricing-tier-price {
+  font-size: 6em;
+}
+
+.pricing-tier-list {
+  list-style-type: none;
+  margin: 0px;
+  padding: 0px;
+  text-align: center;
+}
+
+.pricing-tier-list li {
+    padding: 20px 0;
+    border-bottom: 1px solid #CCCCCC;
+}
+
+.pricing-button {
+  font-size: 150%;
+}
+
 /* FOOTER */
 .footer {
   background: #000000;
@@ -128,5 +174,14 @@ pre {
   }
 
   .chatbox {
+  }
+
+  .pricing-tier {
+    border: 1px solid #CCCCCC;
+    margin: 0px 5px 0px 0px;
+  }
+
+  .pure-input {
+    margin: 0px 0px 0px 0px !important;
   }
 }
