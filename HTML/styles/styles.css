@@ -30,6 +30,10 @@ h1, h2, p {
   border-bottom: none;
 }
 
+.pure-menu-children {
+  background-color: #000000;
+}
+
 /* CONTENT */
 .wrapper {
   margin-top: 34px;
