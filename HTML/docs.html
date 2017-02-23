@@ -36,8 +36,54 @@
   </div>
 
   <div class="wrapper">
-    <div class="pure-g content">
+    <div class="pure-g content docs">
+      <div class="pure-u-1">
+        <h1>OVERVIEW</h1>
+  			<p>Cloudilly comprises of <strong>groups</strong>, <strong>devices</strong> and <strong>posts</strong>. The following sections describe these 3 entities and their interactions under various scenarios.</p>
+        <h2>ENTITIES</h2>
+        <h3>Groups</h3>
+        <p>Groups are the pubsub equivalent of rooms or channels, each containing a mix of devices and posts. A device subscribes to a group using the methods <code>listen</code> or <code>join</code>. Devices and posts in the group are published to a subscribing device via the delegates <code>socketReceivedDevice</code> and <code>socketReceivedPost</code>.</p>
+        <h3>Devices</h3>
+        <p>Devices are endpoints connected to Cloudilly. A device can originate from any one of the supported platforms. After connecting to Cloudilly, a device can perform various actions using the Cloudilly library: <code>update</code> its payload, <code>notify</code> other devices with push notifications, <code>post</code> messages to a group, etc. A device can also <code>listen</code> or <code>join</code> to retrieve devices and posts inside the group. Snippet below shows a device received via the <code>socketReceivedDevice</code> delegate. <strong>isOnline</strong> indicates <strong>device</strong> is currently active in <strong>group</strong>. <strong>sessions</strong> are connections maintained by the device. In the below example, a single device identifier has 2 Cloudilly sessions because 2 browser tabs were opened on the same webpage.</p>
+<pre class="code"><code>{
+    "type": "device",
+    "device": "7efd3e97-c382-48f6-ab34-bc8dcc6f0820",
+    "group": "room",
+    "isOnline": true,
+    "sessions": [
+        "DTHLNH",
+        "SWGSXA"
+    ],
+    "payload": {
+        "customA": "Hello,",
+        "customB": "How are you?"
+    }
+}</code></pre>
 
+        <h3>Posts</h3>
+				<p>A <strong>post</strong> is a short JSON message sent by a <strong>device</strong> to a <strong>group</strong> at UNIX <strong>timestamp</strong>. The snippet below shows a post received via the <code>socketReceivedPost</code> delegate. <strong>payload</strong> is the custom message embedded in the post.</p>
+<pre class="code"><code>{
+    "type": "post",
+    "device": "7efd3e97-c382-48f6-ab34-bc8dcc6f0820",
+    "payload": {
+        "customA": "Hello,",
+        "customB": "I am doing great!",
+        "customC": "Something wonderful is about to happen"
+    },
+    "timestamp": 1435799797164,
+    "group": "room"
+}</code></pre>
+
+        <h2>SCENARIOS</h2>
+				<p>For illustrative purposes, consider the following scenarios involving 2 devices and a group. Cloudilly methods are as <u>underlined</u> and packet flows between entities are denoted in chronological order. <i>Note that only a subset of Cloudilly methods are illustrated below. For the full set of methods, please refer to the individual SDK documentation.</i></p>
+    		<h3>Join</h3>
+        <p>2 devices <code>join</code> Group A. Their presences are automatically broadcasted to all devices in the group via the <code>socketReceivedDevice</code> delegate. Conceptually, it is as though Devices A and B have <i>physically joined</i> Group A and are now visible to all devices already listening or joined to the group. Contrast this with a more passive <code>listen</code> as described in the last scenario.</p>
+
+
+
+
+
+      </div>
     </div>
   </div>
 

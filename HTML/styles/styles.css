@@ -4,10 +4,11 @@ body {
   height: 100%;
   background: #F5F3F5;
 }
-h1, h2, p {
+h1, h2, h3, p {
   margin: 0px;
   padding: 0px;
 }
+p { line-height: 150%; }
 
 /* MENU */
 .menu {
@@ -160,6 +161,27 @@ pre {
 
 .pricing-button {
   font-size: 150%;
+}
+
+/* DOCS */
+.docs {
+  text-align: justify;
+}
+
+.docs h1, .docs h2, .docs h3, .docs p {
+  margin-bottom: 10px;
+}
+
+.docs h2 {
+  margin-top: 20px;
+}
+
+.docs code {
+  color: #C7254E;
+}
+
+.docs pre.code {
+  margin-bottom: 40px;
 }
 
 /* FOOTER */
