@@ -47,6 +47,7 @@ h1, p {
   width: 100%;
   height: 500px;
   border: 1px solid #CCCCCC;
+  overflow-y: scroll;
 }
 
 #chatbox + .pure-form {
@@ -77,18 +78,18 @@ pre {
   margin-top: 5px;
 }
 
-#tabnav {
+#tab-nav {
   margin-top: 50px;
   border-top: none;
   border-bottom: 1px solid #CCCCCC;
 }
 
-#tabnav li a:hover, #tabnav li a:focus {
+#tab-nav li a:hover, #tab-nav li a:focus {
   cursor: pointer;
   border-bottom: none;
 }
 
-#tabnav li a.active {
+#tab-nav li a.active {
   background: #F5F3F5;
   margin-bottom: -1px;
   border-top: 1px solid #CCCCCC;
@@ -96,7 +97,7 @@ pre {
   border-left: 1px solid #CCCCCC;
 }
 
-.tabcontent {
+.tab-content {
   -webkit-animation: fadeEffect 1s;
   animation: fadeEffect 1s;
 }
