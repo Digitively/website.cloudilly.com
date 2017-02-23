@@ -180,8 +180,21 @@ pre {
   color: #C7254E;
 }
 
+.docs pre code {
+  color: #000000;
+}
+
 .docs pre.code {
   margin-bottom: 40px;
+  background: #F1F8FF;
+}
+
+.docs img {
+  width: 100%;
+  max-width: 890px;
+  display: block;
+  margin: 0px auto 50px auto;
+  border: 1px solid #CCCCCC;
 }
 
 /* FOOTER */

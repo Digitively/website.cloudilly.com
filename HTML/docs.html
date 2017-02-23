@@ -75,14 +75,35 @@
 }</code></pre>
 
         <h2>SCENARIOS</h2>
-				<p>For illustrative purposes, consider the following scenarios involving 2 devices and a group. Cloudilly methods are as <u>underlined</u> and packet flows between entities are denoted in chronological order. <i>Note that only a subset of Cloudilly methods are illustrated below. For the full set of methods, please refer to the individual SDK documentation.</i></p>
-    		<h3>Join</h3>
-        <p>2 devices <code>join</code> Group A. Their presences are automatically broadcasted to all devices in the group via the <code>socketReceivedDevice</code> delegate. Conceptually, it is as though Devices A and B have <i>physically joined</i> Group A and are now visible to all devices already listening or joined to the group. Contrast this with a more passive <code>listen</code> as described in the last scenario.</p>
-
-
-
-
-
+        <p>For illustrative purposes, consider the following scenarios involving 2 devices and a group. Cloudilly methods are as <u>underlined</u> and packet flows between entities are denoted in chronological order. <i>Note that only a subset of Cloudilly methods are illustrated below. For the full set of methods, please refer to the individual SDK documentation.</i></p>
+      </div>
+      <div class="pure-u-1">
+        <h3>Join</h3>
+				<p>2 devices <code>join</code> Group A. Their presences are automatically broadcasted to all devices in the group via the <code>socketReceivedDevice</code> delegate. Conceptually, it is as though Devices A and B have <i>physically joined</i> Group A and are now visible to all devices already listening or joined to the group. Contrast this with a more passive <code>listen</code> as described in the final scenario.</p>
+      </div>
+      <div class="pure-u-1">
+        <img src="/images/scenerio_join.png" alt="Join">
+      </div>
+      <div class="pure-u-1">
+        <h3>Update</h3>
+				<p>A continuation of the previous scenario. 2 devices are already joined in the group. At Stage 5, Device A proceeds to <code>update</code> its payload. The updated information is automatically propagated to all devices in the group via the <code>socketReceivedDevice</code> delegate.</p>
+      </div>
+      <div class="pure-u-1">
+        <img src="/images/scenerio_update.png" alt="Update">
+      </div>
+      <div class="pure-u-1">
+        <h3>Post</h3>
+        <p>Still a continuation of the first scenario. This time, Device A <code>post</code> a message with custom <strong>payload</strong> to Group A. The message is automatically broadcasted to all devices in Group A via the <code>socketReceivedPost</code> delegate.</p>
+      </div>
+      <div class="pure-u-1">
+        <img src="/images/scenerio_post.png" alt="Post">
+      </div>
+      <div class="pure-u-1">
+        <h3>Listen</h3>
+				<p>A new scenario. Instead of both devices joining the group, Device A <code>listen</code> and Device B <code>join</code>. Unlike previous scenarios,  B is unaware of A's presence because A is <i>passively</i> listening in the background and unbeknownst to B. At Stage 4, Device B <i>physically</i> exits the group with <strong>isOnline</strong>= <i>false</i>. The exit event is broadcasted to all devices in the group.</p>
+      </div>
+      <div class="pure-u-1">
+        <img src="/images/scenerio_listen.png" alt="Listen">
       </div>
     </div>
   </div>
