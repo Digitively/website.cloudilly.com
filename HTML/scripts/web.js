@@ -86,8 +86,8 @@ Cloudilly.prototype.unlink= function(group, callback) {
   this.writeTask.call(this, body, callback);
 }
 
-Cloudilly.prototype.notify= function(text, group, callback) {
-  var body= {}; body.action= "notify"; body.text= text; body.group= group;
+Cloudilly.prototype.notify= function(group, payload, callback) {
+  var body= {}; body.action= "notify"; body.group= group; body.payload= payload;
   this.writeTask.call(this, body, callback);
 }
 
