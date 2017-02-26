@@ -30,14 +30,14 @@ var chat= function() {
     if(res.group!= "room") { return; }
     console.log(res);
     chatbox.innerHTML= res.isOnline ?
-      "<p>" + chatbox.innerHTML + res.device + " has joined room</p>" :
-      "<p>" + chatbox.innerHTML + res.device + " has left room</p>";
+      chatbox.innerHTML + "<p>" + res.device + " has joined room</p>" :
+      chatbox.innerHTML + "<p>" + res.device + " has left room</p>";
   });
 
   cloudilly.socketReceivedPost(function(res) {
     console.log(res);
-    chatbox.innerHTML= chatbox.innerHTML + res.device + ": " + res.payload.msg + "<br/>";
-    document.getElementById("chatbox").scrollTop= document.getElementById("chatbox").scrollHeight;
+    chatbox.innerHTML= chatbox.innerHTML + "<p>" + res.device + ": " + res.payload.msg + "</p>";
+    chatbox.scrollTop= chatbox.scrollHeight;
   });
 
   cloudilly.connect("cloudilly", "b24c16b0-a13e-4685-8ceb-daa4b42d036e");
