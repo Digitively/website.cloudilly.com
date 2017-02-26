@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en-US">
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+	<meta name="author" content="ngzhongcai" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<script type="text/javascript" src="/scripts/web.js"></script>
+  <script type="text/javascript" src="/scripts/test.js"></script>
+	<script type="text/javascript" src="https://cdn.cloudilly.com/jwt-decode.min.js"></script>
+	<title>Cloudilly | Build RealTime Fast</title>
+</head>
+
+<body>
+	<h2>App</h2>
+	<ul>
+		<li id="forgot" style="display:none"><a href="/forgot.html"><div>Forgot</div></a></li>
+		<li id="login" style="display:none"><a href="/login.html"><div>Login</div></a></li>
+		<li id="signup" style="display:none"><a href="/signup.html"><div>Sign Up</div></a></li>
+		<li id="console" style="display:none"><a style="cursor:pointer; text-decoration:underline;" onClick="location.href='/user/' + states.email"><div>Console</div></a></li>
+		<li id="logout" style="display:none"><a style="cursor:pointer; text-decoration:underline;" onClick="cloudillyLogout();"><div>Logout</div></a></li>
+	</ul>
+
+	<br/><br/>
+
+	<table>
+		<tr>
+			<td>App:</td>
+			<td id="app"></td>
+			<td></td>
+			<td></td>
+		</tr>
+		<tr>
+			<td>Max Tokens:</td>
+			<td id="maxTokens"></td>
+			<td></td>
+			<td></td>
+		</tr>
+		<tr>
+			<td>Web Access Key:</td>
+			<td id="web"></td>
+			<td><a style="cursor:pointer; text-decoration:underline;" onClick="cloudillyChangeAccess('web');">Change</a></td>
+			<td></td>
+		</tr>
+		<tr>
+			<td>Insert Valid Domain:</td>
+			<td><input type="text" id="insertValidDomain" placeholder="Insert Valid Domain"/></td>
+			<td><a style="cursor:pointer; text-decoration:underline;" onClick="cloudillyInsertValidDomain();">Insert</a></td>
+			<td></td>
+		</tr>
+		<tr>
+			<td>Remove Valid Domain:</td>
+			<td><input type="text" id="removeValidDomain" placeholder="Remove Valid Domain"/></td>
+			<td><a style="cursor:pointer; text-decoration:underline;" onClick="cloudillyRemoveValidDomain();">Remove</a></td>
+			<td></td>
+		</tr>
+		<tr>
+			<td>iOS Access Key:</td>
+			<td id="ios"></td>
+			<td><a style="cursor:pointer; text-decoration:underline;" onClick="cloudillyChangeAccess('ios');">Change</a></td>
+			<td></td>
+		</tr>
+		<tr>
+			<td>iOS BunId:</td>
+			<td><input type="text" id="iOSBunId" placeholder="iOS BunId"/></td>
+			<td><a style="cursor:pointer; text-decoration:underline;" onClick="cloudillyUpdateBunId('ios');">Change</a></td>
+			<td></td>
+		</tr>
+		<tr>
+			<td>APNS:</td>
+			<form id="apnsForm">
+			<td><input id="activeApns" name="activeApns" placeholder="Active APNS"></td>
+			<td><input id="apnsFile" name="apnsFile" type="file"></td>
+			<td><a style="cursor:pointer; text-decoration:underline;" onClick="getApnsInBase64();">Submit</a></td>
+			</form>
+		</tr>
+		<tr>
+			<td>Android Access Key:</td>
+			<td id="android"></td>
+			<td><a style="cursor:pointer; text-decoration:underline;" onClick="cloudillyChangeAccess('android');">Change</a></td>
+			<td></td>
+		</tr>
+		<tr>
+			<td>Android BunId:</td>
+			<td><input type="text" id="androidBunId" placeholder="Android Package Id"/></td>
+			<td><a style="cursor:pointer; text-decoration:underline;" onClick="cloudillyUpdateBunId('android');">Change</a></td>
+			<td></td>
+		</tr>
+		<tr>
+			<td>Android GCM:</td>
+			<td><input type="text" id="serverKey" placeholder="GCM Server Key"/></td>
+			<td><a style="cursor:pointer; text-decoration:underline;" onClick="cloudillyUpdateGCMPlatform();">Submit</a></td>
+			<td></td>
+		</tr>
+		<tr>
+			<td>Hook Access Key:</td>
+			<td id="hook"></td>
+			<td><a style="cursor:pointer; text-decoration:underline;" onClick="cloudillyChangeAccess('hook');">Change</a></td>
+			<td></td>
+		</tr>
+	</table>
+
+	<br/><br/>
+
+	<table>
+		<tr>
+			<td><a style="cursor:pointer; text-decoration:underline;" onClick="cloudillyClearCookies();">Clear</a></td>
+			<td></td>
+		</tr>
+		<tr>
+			<td><a style="cursor:pointer; text-decoration:underline;" onClick="connect();">Connect</a></td>
+			<td id="status">Disconnected</td>
+		</tr>
+		<tr>
+			<td><a style="cursor:pointer; text-decoration:underline;" onClick="disconnect();">Disconnect</a></td>
+			<td></td>
+		</tr>
+		<tr>
+			<td><a style="cursor:pointer; text-decoration:underline;" onClick="listen();">Listen</a></td>
+			<td></td>
+		</tr>
+		<tr>
+			<td><a style="cursor:pointer; text-decoration:underline;" onClick="unlisten();">Unlisten</a></td>
+			<td></td>
+		</tr>
+		<tr>
+			<td><a style="cursor:pointer; text-decoration:underline;" onClick="join();">Join</a></td>
+			<td></td>
+		</tr>
+		<tr>
+			<td><a style="cursor:pointer; text-decoration:underline;" onClick="unjoin();">Unjoin</a></td>
+			<td></td>
+		</tr>
+		<tr>
+			<td><a style="cursor:pointer; text-decoration:underline;" onClick="update();">Update</a></td>
+			<td></td>
+		</tr>
+		<tr>
+			<td><a style="cursor:pointer; text-decoration:underline;" onClick="post();">Post</a></td>
+			<td></td>
+		</tr>
+		<tr>
+			<td><a style="cursor:pointer; text-decoration:underline;" onClick="link();">Link</a></td>
+			<td></td>
+		</tr>
+		<tr>
+			<td><a style="cursor:pointer; text-decoration:underline;" onClick="unlink();">Unlink</a></td>
+			<td></td>
+		</tr>
+		<tr>
+			<td><a style="cursor:pointer; text-decoration:underline;" onClick="notify();">Notify</a></td>
+			<td></td>
+		</tr>
+	</table>
+
+</body>
+</html>
