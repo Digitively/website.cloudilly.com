@@ -162,10 +162,6 @@ Cloudilly.prototype.connectToIOT= function() {
       self.status= "CONNECTED";
       self.client.subscribe(self.app + "/device/" + self.device + "/session/" + session);
       self.client.subscribe(self.app + "/device/" + self.device);
-      var tasks= []; for(var key in self.tasks) { tasks.push([key, self.tasks[key]["body"]["timestamp"]]); };
-      tasks.sort(function(a, b) { return a[1]< b[1] ? 1 : a[1]> b[1] ? -1 : 0 }); var length= tasks.length;
-      while(length--) { var task= self.tasks[tasks[length][0]]; self.processTask.call(self, task); }
-      self.connected.call(self, obj);
     },
     onFailure: function(err) {
       self.status= "DISCONNECTED";
@@ -179,6 +175,8 @@ Cloudilly.prototype.connectToIOT= function() {
       case "task": self.receivedTask.call(self, obj); return;
       case "device": self.receivedDevice.call(self, obj); return;
 			case "post": self.receivedPost.call(self, obj); return;
+      case "connected": self.receivedConnected.call(self, obj); return;
+      case "disconnected": self.receivedDisconnected.call(self, obj); return;
     }
   }
   self.client.onConnectionLost= function(err) {
@@ -260,6 +258,21 @@ Cloudilly.prototype.receivedTask= function(obj) {
   this.callbacks[obj.tid].call(this, obj.status== "success" ? null : 1, obj);
 	delete this.callbacks[obj.tid];
 	delete this.tasks[obj.tid];
+}
+
+Cloudilly.prototype.receivedConnected= function(obj) {
+  var tasks= []; for(var key in self.tasks) { tasks.push([key, self.tasks[key]["body"]["timestamp"]]); };
+  tasks.sort(function(a, b) { return a[1]< b[1] ? 1 : a[1]> b[1] ? -1 : 0 }); var length= tasks.length;
+  while(length--) { var task= self.tasks[tasks[length][0]]; self.processTask.call(self, task); }
+  this.connected.call(this, obj);
+}
+
+Cloudilly.prototype.receivedDisconnected= function(obj) {
+  console.log(obj);
+  this.clearCookie.call(this, "accessKeyId");
+  this.clearCookie.call(this, "secretAccessKey");
+  this.clearCookie.call(this, "sessionToken");
+  this.disconnect.call(this);
 }
 
 Cloudilly.prototype.socketConnected= function(callback) {
