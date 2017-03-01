@@ -18,6 +18,7 @@ var Cloudilly= function() {
                   self.cloudillyToken= self.getCookie.call(self, "cloudillyToken");
                   var decoded= self.cloudillyToken ? jwt_decode(self.cloudillyToken) : undefined;
                   self.device= decoded ? decoded.device : undefined;
+                  self.session= self.getSession.call(self);
                 });
               });
             });
@@ -153,14 +154,14 @@ Cloudilly.prototype.getCredentials= function(callback) {
 
 Cloudilly.prototype.connectToIOT= function() {
   var self= this; var iotEndpoint= self.createIotEndpoint.call(self);
-  var session= self.generateSession.call(self);
-  var clientId= self.app + "::" + self.device + "::" + session;
-  var obj= {}; obj.app= self.app; obj.device= self.device; obj.session= session;
+  var clientId= self.app + "::" + self.device + "::" + self.session;
+  var obj= {}; obj.app= self.app; obj.device= self.device; obj.session= self.session;
   self.client= new Paho.MQTT.Client(iotEndpoint, clientId);
   var options= { useSSL: true,
     onSuccess: function() {
+      console.log("@@@@@@ PARTIAL CONNECTION: " + self.device + "::" + self.session);
       self.status= "CONNECTED";
-      self.client.subscribe(self.app + "/device/" + self.device + "/session/" + session);
+      self.client.subscribe(self.app + "/device/" + self.device + "/session/" + self.session);
       self.client.subscribe(self.app + "/device/" + self.device);
     },
     onFailure: function(err) {
@@ -245,11 +246,13 @@ Cloudilly.prototype.generateUUID= function() {
   });
 }
 
-Cloudilly.prototype.generateSession= function() {
-  var session= ""; var possible= "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+Cloudilly.prototype.getSession= function() {
+  var session= sessionStorage.getItem("session");
+  if(session) { return session; }
+  session= ""; var possible= "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
   for(var i= 0; i<= 5; i++) {
     session+= possible.charAt(Math.floor(Math.random() * possible.length));
-    if(i== 5) { return session; }
+    if(i== 5) { sessionStorage.setItem("session", session); return session; }
   }
 }
 
