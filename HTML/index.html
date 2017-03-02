@@ -9,11 +9,12 @@
   <link rel="stylesheet" href="https://unpkg.com/purecss@0.6.2/build/pure-min.css" integrity="sha384-UQiGfs9ICog+LwheBSRCt1o5cbyKIHbwjWscjemyBMT9YCUMZffs6UqUTd0hObXD" crossorigin="anonymous">
   <link rel="stylesheet" href="https://unpkg.com/purecss@0.6.2/build/grids-responsive-min.css">
   <link rel="stylesheet" href="/styles/styles.css">
+  <script type="text/javascript" src="https://cdn.cloudilly.com/jwt-decode.min.js"></script>
   <script type="text/javascript" src="/scripts/web.js"></script>
-  <script type="text/javascript" src="/scripts/index.js"></script>
+  <script type="text/javascript" src="/scripts/script.js"></script>
 </head>
 
-<body onload="chat();">
+<body onload="indexChat();">
   <div class="header">
     <div class="menu pure-menu pure-menu-horizontal pure-menu-fixed">
       <ul class="pure-menu-list">
@@ -31,8 +32,10 @@
           </ul>
         </li>
         <li class="pure-menu-item"><a href="samples.html" class="pure-menu-link">Samples</a></li>
-        <li class="pure-menu-item"><a href="login.html" class="pure-menu-link">Login</a></li>
-        <li class="pure-menu-item"><a href="signup.html" class="pure-menu-link">Sign Up</a></li>
+        <li class="pure-menu-item"><a id="loginMenu" href="login.html" class="pure-menu-link" style="display:inherit">Login</a></li>
+        <li class="pure-menu-item"><a id="signupMenu" href="signup.html" class="pure-menu-link" style="display:inherit">Sign Up</a></li>
+        <li class="pure-menu-item"><a id="consoleMenu" href="console.html" class="pure-menu-link" style="display:none">Console</a></li>
+        <li class="pure-menu-item"><a id="logoutMenu" href="#" class="pure-menu-link" style="display:none">Logout</a></li>
       </ul>
     </div>
   </div>
@@ -43,13 +46,13 @@
         <h1>Cloudilly</h1>
         <p>Build Realtime Fast</p>
         <br/>
-        <p>Cloudilly is a cross platform messaging plugin built on top of AWS serverless services, like DynamoDB, Lambda and IOT.
+        <p>Cloudilly is a cross platform messaging plugin built on top of AWS serverless services.
           Its high level messaging schema makes it easy for developers to quickly build chat and Uber-like applications.
           This demo chat app is built using Cloudilly API. Check out the codes below!</p>
         <br/>
       </div>
 
-      <form class="pure-u-1 pure-form" action="javascript:post()">
+      <form class="pure-u-1 pure-form" action="javascript:indexPostMsg()">
         <div class="pure-g">
           <input id="something" class="pure-input pure-u-1 pure-u-md-4-5" type="text">
           <button type="submit" class="pure-button pure-button-primary pure-u-1 pure-u-md-1-5">Send</button>
@@ -59,9 +62,9 @@
       <div id="tab-nav" class="pure-u-1">
         <div class="pure-menu pure-menu-horizontal">
           <ul class="pure-menu-list">
-            <li class="pure-menu-item"><a href="javascript:void(0)" onclick="openTab(event, 'web');" class="pure-menu-link tab-links active">Web</a></li>
-            <li class="pure-menu-item"><a href="javascript:void(0)" onclick="openTab(event, 'objc');" class="pure-menu-link tab-links">ObjC</a></li>
-            <li class="pure-menu-item"><a href="javascript:void(0)" onclick="openTab(event, 'android');" class="pure-menu-link tab-links">Android</a></li>
+            <li class="pure-menu-item"><a href="javascript:void(0)" onclick="indexOpenTab(event, 'web');" class="pure-menu-link tab-links active">Web</a></li>
+            <li class="pure-menu-item"><a href="javascript:void(0)" onclick="indexOpenTab(event, 'objc');" class="pure-menu-link tab-links">ObjC</a></li>
+            <li class="pure-menu-item"><a href="javascript:void(0)" onclick="indexOpenTab(event, 'android');" class="pure-menu-link tab-links">Android</a></li>
           </ul>
         </div>
       </div>

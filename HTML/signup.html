@@ -10,6 +10,8 @@
   <link rel="stylesheet" href="https://unpkg.com/purecss@0.6.2/build/grids-responsive-min.css">
   <link rel="stylesheet" href="/styles/styles.css">
   <script type="text/javascript" src="https://cdn.cloudilly.com/jwt-decode.min.js"></script>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/spin.js/2.3.2/spin.min.js"></script>
+  <script type="text/javascript" src="/scripts/script.js"></script>
 </head>
 
 <body>
@@ -40,41 +42,15 @@
 
   <div class="wrapper">
     <div class="pure-g content narrow-content">
-      <div class="pure-u-1 narrow-header">
-        <h1>Monthly pricing</h1>
-        <p>Pay based on usage</p>
+      <div class="narrow-header pure-u-1">
+        <h1>Sign Up</h1>
       </div>
-
-      <div class="pure-u-1 pure-u-md-1-2">
-        <div class="pricing-tier">
-          <div class="pricing-tier-header">
-            <h1>Hacker</h1>
-            <span class="pricing-tier-price">Free</span>
-          </div>
-          <ul class="pricing-tier-list">
-            <li>Max 3 concurrent devices</li>
-            <li>Each device max 20calls in 5min</li>
-          </ul>
-        </div>
-      </div>
-
-      <div class="pure-u-1 pure-u-md-1-2">
-        <div class="pricing-tier">
-          <div class="pricing-tier-header">
-            <h1>Professional</h1>
-            <span class="pricing-tier-price">$1</span>
-          </div>
-          <ul class="pricing-tier-list">
-            <li>1 extra concurrency per month</li>
-            <li>Each device max 60calls in 5min</li>
-          </ul>
-        </div>
-      </div>
-
-      <div class="pure-u-1 narrow-header">
-        <button type="button" class="pure-button pure-button-primary pricing-button">Get free account now!</button>
-      </div>
-
+      <form class="pure-form pure-u-1" action="javascript:consoleSignUp();">
+        <input id="email" type="text" class="pure-input pure-u-1" placeholder="Username">
+        <input id="password" type="password" class="pure-input pure-u-1" placeholder="Password">
+        <input id="cfmpassword" type="password" class="pure-input pure-u-1" placeholder="Confirm password">
+        <button id="signupBtn" type="submit" class="pure-button pure-button-primary pure-u-1 pure-u-md-1-3">Register</button>
+      </form>
     </div>
   </div>
 
