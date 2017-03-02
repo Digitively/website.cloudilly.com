@@ -234,8 +234,6 @@ Cloudilly.prototype.writeTask= function(body, callback) {
 Cloudilly.prototype.processTask= function(task) {
   var msg= JSON.stringify(task); var action= task.body.action;
   var message= new Paho.MQTT.Message(msg); message.destinationName= "command/" + this.app; this.client.send(message);
-  if(action== "listen" || action== "join") { this.client.subscribe(this.app + "/group/" + task.body.group); }
-  if(action== "unlisten" || action== "unjoin") { this.client.unsubscribe(this.app + "/group/" + task.body.group); }
 }
 
 Cloudilly.prototype.generateUUID= function() {
@@ -259,8 +257,10 @@ Cloudilly.prototype.getSession= function() {
 Cloudilly.prototype.receivedTask= function(obj) {
 	if(!this.callbacks[obj.tid]) { return; }
   this.callbacks[obj.tid].call(this, obj.status== "success" ? null : 1, obj);
-	delete this.callbacks[obj.tid];
-	delete this.tasks[obj.tid];
+	delete this.callbacks[obj.tid]; delete this.tasks[obj.tid];
+  if(obj.status== "fail") { return; }
+  if(obj.action== "listen" || obj.action== "join") { this.client.subscribe(this.app + "/group/" + obj.group); }
+  if(obj.action== "unlisten" || obj.action== "unjoin") { this.client.unsubscribe(this.app + "/group/" + obj.group); }
 }
 
 Cloudilly.prototype.receivedConnected= function(obj) {
