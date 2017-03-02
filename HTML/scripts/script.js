@@ -1,17 +1,15 @@
-var states= {};
-Object.defineProperty(states, "email", {
-  get: function() { return email; },
-  set: function(val) {
-    document.getElementById("loginMenu").style.display= val ? "none" : "inherit";
-    document.getElementById("signupMenu").style.display= val ? "none" : "inherit";
-    document.getElementById("consoleMenu").style.display= val ? "inherit" : "none";
-    document.getElementById("logoutMenu").style.display= val ? "inherit" : "none";
-    email= val;
-  }
-});
-
-var checkEmail= function() {
-  states.email= getCookie("consoleToken") ? jwt_decode(getCookie("consoleToken")).email : undefined;
+var initStates= function() {
+  window.states= {};
+  Object.defineProperty(states, "email", {
+    get: function() { return email; },
+    set: function(val) {
+      document.getElementById("loginMenu").style.display= val ? "none" : "inherit";
+      document.getElementById("signupMenu").style.display= val ? "none" : "inherit";
+      document.getElementById("consoleMenu").style.display= val ? "inherit" : "none";
+      document.getElementById("logoutMenu").style.display= val ? "inherit" : "none";
+      email= val;
+    }
+  });
 }
 
 /* LOGIN */
