@@ -1,32 +1,80 @@
-/* MENU */
-var initMenu= function() {
-  window.states= {};
-  Object.defineProperty(states, "email", {
-    get: function() { return email; },
-    set: function(val) {
-      document.getElementById("loginMenu").style.display= val ? "none" : "inherit";
-      document.getElementById("signupMenu").style.display= val ? "none" : "inherit";
-      document.getElementById("consoleMenu").style.display= val ? "inherit" : "none";
-      document.getElementById("logoutMenu").style.display= val ? "inherit" : "none";
-      email= val;
-    }
-  });
+window.states= {};
+Object.defineProperty(states, "email", {
+  get: function() { return email; },
+  set: function(val) {
+    document.getElementById("loginMenu").style.display= val ? "none" : "inherit";
+    document.getElementById("signupMenu").style.display= val ? "none" : "inherit";
+    document.getElementById("consoleMenu").style.display= val ? "inherit" : "none";
+    document.getElementById("logoutMenu").style.display= val ? "inherit" : "none";
+    email= val;
+  }
+});
+
+/* ERROR REPORTING WITHIN INPUT */
+var addError= function(id, error) {
+  var element= document.getElementById(id);
+  element.setAttribute("placeholder", error);
+  element.className= element.className+ " error";
+}
+
+var clearError= function(id) {
+  var element= document.getElementById(id);
+  var original= element.getAttribute("original");
+  element.classList.remove("error");
+  element.setAttribute("placeholder", original);
+}
+
+/* LOGOUT */
+var consoleLogout= function() {
+	clearCookie("consoleToken");
+	states.email= undefined;
+	location.href="/index.html";
+}
+
+/* SIGNUP */
+var consoleSignUp= function() {
+  var signupBtn= document.getElementById("signupBtn"); var email= document.getElementById("email");
+	var password= document.getElementById("password"); var cfmpassword= document.getElementById("cfmpassword");
+  if(email.value== "") { addError("email", "Email"); }
+  if(password.value== "") { addError("password", "Password"); }
+  if(cfmpassword.value== "") { addError("cfmpassword", "Confirm password"); }
+	if(email.value== "" || password.value== "") { return; }
+  if(password.value!= cfmpassword.value) {
+    addError("password", "Passwords not identical");
+    addError("cfmpassword", "Passwords not identical");
+    password.value= ""; cfmpassword.value= "";
+    return;
+  }
+  signupBtn.innerHTML= "Processing";
+  var spinner= new Spinner({ lines: 11, length: 3, width: 2, radius: 4, left: "20px" }).spin(signupBtn);
+  var params= ""; params= params + "email=" + email.value; params= params + "&password=" + password.value;
+  var xmlHttp= new XMLHttpRequest();
+  xmlHttp.open("POST", "https://4o03fvuqna.execute-api.us-east-2.amazonaws.com/stage/user", true);
+  xmlHttp.setRequestHeader("content-type","application/x-www-form-urlencoded");
+  xmlHttp.onreadystatechange= function() {
+    if(xmlHttp.readyState!= 4) { return; }
+    var res= JSON.parse(xmlHttp.responseText); // 404::USER_ALREADY_EXIST
+    if(res.status== "success") { location.href="/verify.html"; return; }
+    spinner.stop(); signupBtn.innerHTML= "Register";
+    addError("email", "Email already registered");
+    email.value= ""; password.value= "";
+    cfmpassword.value= ""; email.focus();
+    console.log(res); // TODO: REMOVE BEFORE PRODUCTION
+  }
+  xmlHttp.send(params);
 }
 
 /* LOGIN */
 var consoleLogin= function() {
-  // TODO: HANDLE ERROR
   var loginBtn= document.getElementById("loginBtn");
 	var email= document.getElementById("email");
 	var password= document.getElementById("password");
+  if(email.value== "") { addError("email", "Email"); }
+  if(password.value== "") { addError("password", "Password"); }
 	if(email.value== "" || password.value== "") { return; }
-
-  var params= "";
-	params= params + "email=" + email.value;
-	params= params + "&password=" + password.value;
   loginBtn.innerHTML= "Processing";
   var spinner= new Spinner({ lines: 11, length: 3, width: 2, radius: 4, left: "20px" }).spin(loginBtn);
-
+  var params= ""; params= params + "email=" + email.value; params= params + "&password=" + password.value;
   var xmlHttp= new XMLHttpRequest();
   xmlHttp.open("POST", "https://4o03fvuqna.execute-api.us-east-2.amazonaws.com/stage/login", true);
   xmlHttp.setRequestHeader("content-type","application/x-www-form-urlencoded");
@@ -36,40 +84,13 @@ var consoleLogin= function() {
     console.log(res); // TODO: REMOVE BEFORE PRODUCTION
     if(res.status) { setCookie("consoleToken", res.consoleToken, 86400000); }
     states.email= jwt_decode(getCookie("consoleToken")).email;
-		location.href="/user/" + email.value;
-    spinner.stop();
-    loginBtn.innerHTML= "Login";
-  }
-  xmlHttp.send(params);
-}
-
-/* SIGNUP */
-var consoleSignUp= function() {
-  // TODO: HANDLE ERROR
-  var signupBtn= document.getElementById("signupBtn");
-	var email= document.getElementById("email");
-	var password= document.getElementById("password");
-	var cfmpassword= document.getElementById("cfmpassword");
-
-	if(email.value== "" || password.value== "") { return; }
-	if(password.value!= cfmpassword.value) { return; }
-  signupBtn.innerHTML= "Processing";
-  var spinner= new Spinner({ lines: 11, length: 3, width: 2, radius: 4, left: "20px" }).spin(signupBtn);
-
-  var params= "";
-	params= params + "email=" + email.value;
-	params= params + "&password=" + password.value;
-
-  var xmlHttp= new XMLHttpRequest();
-  xmlHttp.open("POST", "https://4o03fvuqna.execute-api.us-east-2.amazonaws.com/stage/user", true);
-  xmlHttp.setRequestHeader("content-type","application/x-www-form-urlencoded");
-  xmlHttp.onreadystatechange= function() {
-    if(xmlHttp.readyState!= 4) { return; }
-    var res= JSON.parse(xmlHttp.responseText);
-		console.log(res); // TODO: REMOVE BEFORE PRODUCTION
-    location.href="/verify.html";
-    spinner.stop();
-    signupBtn.innerHTML= "Register";
+    if(res.status== "success") { setCookie("consoleToken", res.consoleToken, 86400000); location.href="/user/" + email.value; return; }
+    spinner.stop(); loginBtn.innerHTML= "Login";
+    addError("email", "Wrong email");
+    addError("password", "Wrong password");
+    email.value= ""; password.value= "";
+    email.focus();
+    console.log(res); // TODO: REMOVE BEFORE PRODUCTION
   }
   xmlHttp.send(params);
 }
@@ -132,6 +153,11 @@ var indexPostMsg= function() {
     console.log(res);
     return false;
   });
+}
+
+/* MENU */
+var initMenu= function() {
+  states.email= getCookie("consoleToken") ? jwt_decode(getCookie("consoleToken")).email : undefined;
 }
 
 /* UTILS */

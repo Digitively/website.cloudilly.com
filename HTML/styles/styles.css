@@ -199,3 +199,9 @@ pre {
     margin: 0px 5px 0px 0px;
   }
 }
+
+/* ERROR IN PLACEHOLDER */
+input.error::-webkit-input-placeholder { color: #FF0000; }
+input.error:-moz-placeholder { color: #FF0000; opacity: 1; }
+input.error::-moz-placeholder { color: #FF0000; opacity: 1; }
+input.error:-ms-input-placeholder { color: #FF0000; }
