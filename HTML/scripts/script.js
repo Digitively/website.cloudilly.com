@@ -1,4 +1,5 @@
-var initStates= function() {
+/* MENU */
+var initMenu= function() {
   window.states= {};
   Object.defineProperty(states, "email", {
     get: function() { return email; },
