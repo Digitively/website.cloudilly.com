@@ -18,6 +18,7 @@ var Cloudilly= function() {
                   self.cloudillyToken= self.getCookie.call(self, "cloudillyToken");
                   var decoded= self.cloudillyToken ? jwt_decode(self.cloudillyToken) : undefined;
                   self.device= decoded ? decoded.device : undefined;
+                  self.session= self.generateSession.call(self);
                 });
               });
             });
@@ -134,7 +135,7 @@ Cloudilly.prototype.getCredentials= function(callback) {
   xmlHttp.onreadystatechange= function() {
     if(xmlHttp.readyState!= 4) { return; }
     var res= JSON.parse(xmlHttp.responseText);
-    if(res.status== "fail") { callback(res); return; }
+    if(!res.cloudillyToken) { callback(res); return; }
     self.cloudillyToken= res.cloudillyToken; self.accessKeyId= res.accessKeyId;
     self.secretAccessKey= res.secretAccessKey; self.sessionToken= res.sessionToken;
     var decoded= jwt_decode(self.cloudillyToken); self.device= decoded.device;
@@ -153,20 +154,21 @@ Cloudilly.prototype.getCredentials= function(callback) {
 
 Cloudilly.prototype.connectToIOT= function() {
   var self= this; var iotEndpoint= self.createIotEndpoint.call(self);
-  var session= self.generateSession.call(self);
-  var clientId= self.app + "::" + self.device + "::" + session;
-  var obj= {}; obj.app= self.app; obj.device= self.device; obj.session= session;
+  var clientId= self.app + "::" + self.device + "::" + self.session;
+  var obj= {}; obj.app= self.app; obj.device= self.device; obj.session= self.session;
   self.client= new Paho.MQTT.Client(iotEndpoint, clientId);
   var options= { useSSL: true, keepAliveInterval: 5,
     onSuccess: function() {
-      console.log("@@@@@@ PARTIAL CONNECTION: " + self.device + "::" + session);
+      console.log("@@@@@@ PARTIAL CONNECTION: " + self.device + "::" + self.session);
       self.status= "CONNECTED";
-      self.client.subscribe(self.app + "/device/" + self.device + "/session/" + session);
+      self.client.subscribe(self.app + "/device/" + self.device + "/session/" + self.session);
       self.client.subscribe(self.app + "/device/" + self.device);
+      self.startPing.call(self);
     },
     onFailure: function(err) {
       self.status= "DISCONNECTED";
       self.disconnected.call(self, err);
+      clearTimeout(self.ping);
     }
   }
   self.client.connect(options);
@@ -183,6 +185,7 @@ Cloudilly.prototype.connectToIOT= function() {
   self.client.onConnectionLost= function(err) {
     self.status= "DISCONNECTED";
     self.disconnected.call(self, err);
+    clearTimeout(self.ping);
   };
 }
 
@@ -250,6 +253,20 @@ Cloudilly.prototype.generateSession= function() {
     session+= possible.charAt(Math.floor(Math.random() * possible.length));
     if(i== 5) { return session; }
   }
+}
+
+Cloudilly.prototype.startPing= function() {
+  var self= this;
+  self.firePing.call(self);
+  self.ping= setInterval(function() {
+    self.firePing.call(self);
+  }, 2500);
+}
+
+Cloudilly.prototype.firePing= function() {
+  var message= new Paho.MQTT.Message("1");
+  message.destinationName= this.app + "/device/" + this.device + "/session/" + this.session;
+  this.client.send(message);
 }
 
 Cloudilly.prototype.receivedTask= function(obj) {
