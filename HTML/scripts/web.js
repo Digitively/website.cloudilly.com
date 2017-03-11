@@ -157,7 +157,8 @@ Cloudilly.prototype.connectToIOT= function() {
   var clientId= self.app + "::" + self.device + "::" + self.session;
   var obj= {}; obj.app= self.app; obj.device= self.device; obj.session= self.session;
   self.client= new Paho.MQTT.Client(iotEndpoint, clientId);
-  var task= {}; task.action= "disconnected"; task.tid= "lwt::" + self.session; var msg= JSON.stringify(task);
+  var body= {}; body.action= "disconnected"; body.tid= "lwt::" + self.session;
+  var task= {}; task.body= body; var msg= JSON.stringify(task);
   var lwt= new Paho.MQTT.Message(msg); lwt.destinationName= "command/" + self.app;
   var options= { useSSL: true, keepAliveInterval: 5, willMessage: lwt,
     onSuccess: function() {
