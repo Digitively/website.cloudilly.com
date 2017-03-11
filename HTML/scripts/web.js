@@ -157,7 +157,9 @@ Cloudilly.prototype.connectToIOT= function() {
   var clientId= self.app + "::" + self.device + "::" + self.session;
   var obj= {}; obj.app= self.app; obj.device= self.device; obj.session= self.session;
   self.client= new Paho.MQTT.Client(iotEndpoint, clientId);
-  var options= { useSSL: true, keepAliveInterval: 5,
+  var task= {}; task.action= "disconnected"; task.tid= "lwt::" + self.session; var msg= JSON.stringify(task);
+  var lwt= new Paho.MQTT.Message(msg); lwt.destinationName= "command/" + self.app;
+  var options= { useSSL: true, keepAliveInterval: 5, willMessage: lwt,
     onSuccess: function() {
       console.log("@@@@@@ PARTIAL CONNECTION: " + self.device + "::" + self.session);
       self.status= "CONNECTED";
@@ -235,8 +237,8 @@ Cloudilly.prototype.writeTask= function(body, callback) {
 }
 
 Cloudilly.prototype.processTask= function(task) {
-  var msg= JSON.stringify(task); var action= task.body.action;
-  var message= new Paho.MQTT.Message(msg); message.destinationName= "command/" + this.app; this.client.send(message);
+  var msg= JSON.stringify(task); var message= new Paho.MQTT.Message(msg);
+  message.destinationName= "command/" + this.app; this.client.send(message);
 }
 
 Cloudilly.prototype.generateUUID= function() {

@@ -112,11 +112,14 @@ var indexChat= function() {
   cloudilly.socketConnected(function(res) {
     console.log("@@@@@@ CONNECTED");
     chatbox.innerHTML= chatbox.innerHTML + "<p>Connected as " + res.device + "</p>";
+
+    /*
     cloudilly.join("room", function(err, res) {
       err ? console.log("Error: Oops. Something wrong") : console.log("@@@@@@ JOIN");
       if(err && res.msg== "401::EXCEEDED_THROTTLE_LIMITS") { chatbox.innerHTML= chatbox.innerHTML + "<p style='color:#FF0000;'>EXCEEDED THROTTLE LIMITS</p>"; }
       console.log(res);
     });
+    */
   });
 
   cloudilly.socketDisconnected(function(err) {
