@@ -263,7 +263,7 @@ Cloudilly.prototype.startPing= function() {
   self.firePing.call(self);
   self.ping= setInterval(function() {
     self.firePing.call(self);
-  }, 2500);
+  }, 150 * 1000);
 }
 
 Cloudilly.prototype.firePing= function() {
