@@ -260,7 +260,6 @@ Cloudilly.prototype.generateSession= function() {
 
 Cloudilly.prototype.startPing= function() {
   var self= this;
-  self.firePing.call(self);
   self.ping= setInterval(function() {
     self.firePing.call(self);
   }, 150000);
@@ -269,7 +268,7 @@ Cloudilly.prototype.startPing= function() {
 Cloudilly.prototype.firePing= function() {
   var message= new Paho.MQTT.Message("1");
   message.destinationName= "ping/" + this.app;
-  this.client.send(message);
+  this.client.send(message); 
 }
 
 Cloudilly.prototype.receivedTask= function(obj) {
