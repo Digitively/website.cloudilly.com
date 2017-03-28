@@ -269,7 +269,6 @@ Cloudilly.prototype.firePing= function() {
   var message= new Paho.MQTT.Message("1");
   message.destinationName= "ping/" + this.app;
   this.client.send(message);
-  console.log("PING");
 }
 
 Cloudilly.prototype.receivedTask= function(obj) {
