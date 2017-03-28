@@ -160,7 +160,7 @@ Cloudilly.prototype.connectToIOT= function() {
   var body= {}; body.action= "disconnected"; body.tid= "lwt::" + self.session;
   var task= {}; task.body= body; var msg= JSON.stringify(task);
   var lwt= new Paho.MQTT.Message(msg); lwt.destinationName= "command/" + self.app;
-  var options= { useSSL: true, keepAliveInterval: 5, willMessage: lwt,
+  var options= { useSSL: true, willMessage: lwt,
     onSuccess: function() {
       console.log("@@@@@@ PARTIAL CONNECTION: " + self.device + "::" + self.session);
       self.status= "CONNECTED";
@@ -268,7 +268,8 @@ Cloudilly.prototype.startPing= function() {
 Cloudilly.prototype.firePing= function() {
   var message= new Paho.MQTT.Message("1");
   message.destinationName= "ping/" + this.app;
-  this.client.send(message); 
+  this.client.send(message);
+  console.log("PING");
 }
 
 Cloudilly.prototype.receivedTask= function(obj) {
