@@ -67,37 +67,35 @@ var disconnect= function() {
 }
 
 var listen= function() {
-	cloudilly.listen("test", function(err, res) {
+	cloudilly.listen("room", function(err, res) {
 		err ? console.log("ERROR: Oops. Something wrong") : console.log("@@@@@@ LISTEN");
 		console.log(res);
 	});
 }
 
 var unlisten= function() {
-	cloudilly.unlisten("test", function(err, res) {
+	cloudilly.unlisten("room", function(err, res) {
 		err ? console.log("ERROR: Oops. Something wrong") : console.log("@@@@@@ UNLISTEN");
 		console.log(res);
 	});
 }
 
 var join= function() {
-	cloudilly.join("test", function(err, res) {
+	cloudilly.join("room", function(err, res) {
 		err ? console.log("ERROR: Oops. Something wrong") : console.log("@@@@@@ JOIN");
 		console.log(res);
 	});
 }
 
 var unjoin= function() {
-	cloudilly.unjoin("test", function(err, res) {
+	cloudilly.unjoin("room", function(err, res) {
 		err ? console.log("ERROR: Oops. Something wrong") : console.log("@@@@@@ UNJOIN");
 		console.log(res);
 	});
 }
 
 var update= function() {
-	var payload= {};
-	payload.a= "A";
-	payload.b= "B";
+	var payload= {}; payload.a= "A"; payload.b= "B";
 	cloudilly.update(payload, function(err, res) {
 		err ? console.log("ERROR: Oops. Something wrong") : console.log("@@@@@@ UPDATE");
 		console.log(res);
@@ -105,24 +103,22 @@ var update= function() {
 }
 
 var post= function() {
-	var payload= {};
-	payload.a= "A";
-	payload.b= "B";
-	cloudilly.post("test", payload, function(err, res) {
+	var payload= {}; payload.a= "A"; payload.b= "B";
+	cloudilly.post("room", payload, function(err, res) {
 		err ? console.log("ERROR: Oops. Something wrong") : console.log("@@@@@@ POST");
 		console.log(res);
 	});
 }
 
 var link= function() {
-	cloudilly.link("test", function(err, res) {
+	cloudilly.link("room", function(err, res) {
 		err ? console.log("ERROR: Oops. Something wrong") : console.log("@@@@@@ LINK");
 		console.log(res);
 	});
 }
 
 var unlink= function() {
-	cloudilly.unlink("test", function(err, res) {
+	cloudilly.unlink("room", function(err, res) {
 		err ? console.log("ERROR: Oops. Something wrong") : console.log("@@@@@@ UNLINK");
 		console.log(res);
 	});
