@@ -157,10 +157,7 @@ Cloudilly.prototype.connectToIOT= function() {
   var clientId= self.app + "::" + self.device + "::" + self.session;
   var obj= {}; obj.app= self.app; obj.device= self.device; obj.session= self.session;
   self.client= new Paho.MQTT.Client(iotEndpoint, clientId);
-  var body= {}; body.action= "disconnected"; body.tid= "lwt::" + self.session;
-  var task= {}; task.body= body; var msg= JSON.stringify(task);
-  var lwt= new Paho.MQTT.Message(msg); lwt.destinationName= "command/" + self.app;
-  var options= { useSSL: true, willMessage: lwt,
+  var options= { useSSL: true, 
     onSuccess: function() {
       console.log("@@@@@@ PARTIAL CONNECTION: " + self.device + "::" + self.session);
       self.status= "CONNECTED";
